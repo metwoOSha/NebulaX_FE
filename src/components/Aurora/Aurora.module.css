@@ -1,0 +1,86 @@
+.root {
+    composes: aurora from '@/styles/mixins.module.css';
+}
+
+.root::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(110% 95% at 50% 42%, transparent 0%, var(--bg-base) 74%);
+    pointer-events: none;
+}
+
+.blob {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(110px);
+    opacity: 0.34;
+    will-change: transform;
+}
+
+.blob1 {
+    width: 46vw;
+    height: 46vw;
+    left: -8vw;
+    top: -10vw;
+    background: var(--aurora-purple);
+    animation: aurora-drift-1 22s ease-in-out infinite;
+}
+
+.blob2 {
+    width: 40vw;
+    height: 40vw;
+    right: -6vw;
+    top: 6vh;
+    background: var(--aurora-blue);
+    animation: aurora-drift-2 26s ease-in-out infinite;
+}
+
+.blob3 {
+    width: 50vw;
+    height: 50vw;
+    left: 18vw;
+    bottom: -22vw;
+    background: var(--aurora-indigo);
+    animation: aurora-drift-3 30s ease-in-out infinite;
+}
+
+.blob4 {
+    width: 30vw;
+    height: 30vw;
+    right: 14vw;
+    bottom: -8vw;
+    background: var(--aurora-violet);
+    opacity: 0.18;
+    animation: aurora-drift-1 20s ease-in-out infinite reverse;
+}
+
+@keyframes aurora-drift-1 {
+    0%,
+    100% {
+        transform: translate(0, 0) scale(1);
+    }
+    50% {
+        transform: translate(4vw, 3vh) scale(1.05);
+    }
+}
+
+@keyframes aurora-drift-2 {
+    0%,
+    100% {
+        transform: translate(0, 0) scale(1);
+    }
+    50% {
+        transform: translate(-3vw, 4vh) scale(1.04);
+    }
+}
+
+@keyframes aurora-drift-3 {
+    0%,
+    100% {
+        transform: translate(0, 0) scale(1);
+    }
+    50% {
+        transform: translate(3vw, -3vh) scale(1.06);
+    }
+}

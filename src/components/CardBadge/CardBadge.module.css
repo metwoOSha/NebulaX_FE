@@ -1,0 +1,29 @@
+.tag {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border: 1.5px solid transparent;
+    border-radius: var(--radius-full);
+}
+
+.join {
+    color: var(--on-accent);
+    background: var(--accent);
+    box-shadow: 0 2px 8px var(--accent-glow);
+}
+
+.member {
+    color: var(--badge-neutral-text);
+    background: var(--badge-neutral);
+    border-color: var(--badge-neutral-border);
+}
+
+.admin {
+    color: var(--accent);
+    background: var(--accent-soft);
+}

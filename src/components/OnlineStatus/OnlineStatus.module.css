@@ -1,0 +1,26 @@
+.onlineBlock {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-size: var(--text-sm);
+    color: var(--text-secondary);
+}
+
+.dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 999px;
+    flex-shrink: 0;
+    background: var(--online);
+    box-shadow:
+        0 0 0 2px rgba(0, 0, 0, 0.15),
+        0 0 10px 1px var(--online-glow);
+}
+
+.offline {
+    background: var(--text-tertiary);
+}
+
+.online {
+    background: var(--online);
+}

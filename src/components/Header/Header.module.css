@@ -1,0 +1,30 @@
+.header {
+    composes: glass from '@/styles/mixins.module.css';
+    position: relative;
+    z-index: 50;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 18px;
+    border-radius: var(--radius-lg);
+    flex-shrink: 0;
+}
+
+.leftSide {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-width: 0px;
+}
+
+.rightSide {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.logoTitle {
+    font-size: var(--text-lg);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+}
