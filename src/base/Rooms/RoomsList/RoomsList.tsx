@@ -1,10 +1,14 @@
 'use client';
 
+import { useState } from 'react';
 import CreateRoom from '@/components/CreateRoom/CreateRoom';
+import CreateRoomModal from '@/components/Modals/CreateRoomModal/CreateRoomModal';
 import cls from './RoomsList.module.css';
 import CardRoom from '@/components/CardRoom/CardRoom';
 
 export default function RoomsList() {
+    const [isCreateOpen, setCreateOpen] = useState(false);
+
     return (
         <div className={cls.rooms}>
             <div className={cls.roomsHeader}>
@@ -16,7 +20,7 @@ export default function RoomsList() {
             <div className={cls.created}>Created by you</div>
             <div className={cls.roomsGrid}>
                 <CardRoom />
-                <CreateRoom />
+                <CreateRoom onClick={() => setCreateOpen(true)} />
             </div>
             <div className={cls.joined}>Joined</div>
             <div className={cls.roomsGrid}>
@@ -26,6 +30,10 @@ export default function RoomsList() {
             <div className={cls.roomsGrid}>
                 <CardRoom />
             </div>
+
+            {isCreateOpen && (
+                <CreateRoomModal onClose={() => setCreateOpen(false)} onSubmit={() => setCreateOpen(false)} />
+            )}
         </div>
     );
 }

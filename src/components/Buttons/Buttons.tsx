@@ -6,7 +6,7 @@ import { useThemeStore } from '@/store/themeStore';
 import cls from './Buttons.module.css';
 import { ArrowLeftIcon, SunIcon, MoonIcon, SidebarIcon, MembersIcon } from '@/components/icons';
 
-type ButtonType = 'back' | 'action' | 'profile' | 'send' | 'close' | 'primary' | 'danger';
+type ButtonType = 'back' | 'action' | 'profile' | 'send' | 'close' | 'primary' | 'danger' | 'ghost';
 type ActionType = 'menu' | 'members' | 'theme';
 
 interface ButtonsProps {
@@ -21,6 +21,7 @@ interface ButtonsProps {
     disabled?: boolean;
     htmlType?: 'button' | 'submit';
     className?: string;
+    compact?: boolean;
 }
 
 const ACTION_ICONS: Record<ActionType, React.ReactNode> = {
@@ -41,6 +42,7 @@ export default function Buttons({
     disabled,
     htmlType = 'button',
     className,
+    compact,
 }: ButtonsProps) {
     const { theme, toggleTheme } = useThemeStore();
 
@@ -103,11 +105,24 @@ export default function Buttons({
         return (
             <button
                 type="button"
-                className={clsx(cls.btn, cls.btnGhost, cls.close, className)}
+                className={clsx(cls.btn, cls.btnGhost, !compact && cls.close, className)}
                 onClick={onClick}
                 aria-label={ariaLabel ?? 'Close'}
             >
                 ✕
+            </button>
+        );
+    }
+
+    if (type === 'ghost') {
+        return (
+            <button
+                type={htmlType}
+                className={clsx(cls.btn, cls.btnGhost, className)}
+                onClick={onClick}
+                disabled={disabled}
+            >
+                {label}
             </button>
         );
     }
