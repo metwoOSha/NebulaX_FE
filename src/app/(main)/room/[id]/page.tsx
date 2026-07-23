@@ -1,3 +1,5 @@
+import RoomChat from '@/base/Room/RoomChat/RoomChat';
+
 export default function page() {
-    return <div>room</div>;
+    return <RoomChat />;
 }

@@ -1,6 +1,7 @@
 'use client';
 
 import CardBadge from '../CardBadge/CardBadge';
+import IconBadge from '../IconBadge/IconBadge';
 import OnlineStatus from '../OnlineStatus/OnlineStatus';
 import cls from './CardRoom.module.css';
 
@@ -9,14 +10,14 @@ export default function CardRoom() {
         <div className={cls.roomCard}>
             <div className={cls.roomBody}>
                 <div className={cls.roomIcon}>
-                    <div style={{ height: '40px', width: '40px', borderRadius: '12px', backgroundColor: 'blue' }}></div>
+                    <IconBadge tileId={1} size="md" />
                     <span className={cls.roomBadge}>3</span>
                 </div>
                 <div className={cls.roomName}>
                     <span>Squad Lobby</span>
                 </div>
                 <div className={cls.roomMeta}>
-                    <OnlineStatus online={6} />
+                    <OnlineStatus online={6} type="card" />
                     <CardBadge type="admin" />
                 </div>
             </div>

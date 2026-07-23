@@ -1,5 +1,5 @@
 import RoomsList from '@/base/Rooms/RoomsList/RoomsList';
 
-export default function page() {
+export default function RoomsPage() {
     return <RoomsList />;
 }

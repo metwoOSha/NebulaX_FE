@@ -2,6 +2,11 @@
     flex: 1 1 0%;
     overflow-y: auto;
     padding: 4px;
+    scrollbar-width: none;
+}
+
+.rooms::-webkit-scrollbar {
+    display: none;
 }
 
 .roomsGrid {

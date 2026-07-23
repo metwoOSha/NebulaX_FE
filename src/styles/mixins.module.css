@@ -25,3 +25,19 @@
         inset 0 1px 0 var(--glass-highlight),
         inset 0 0 30px rgba(255, 255, 255, 0.02);
 }
+
+.glassStrong {
+    composes: glass;
+    background: var(--glass-bg-strong);
+}
+
+.modalOverlay {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    overflow-y: auto;
+}

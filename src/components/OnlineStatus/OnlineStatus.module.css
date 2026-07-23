@@ -1,9 +1,17 @@
 .onlineBlock {
     display: flex;
     align-items: center;
+    color: var(--text-secondary);
+}
+
+.card {
     gap: 7px;
     font-size: var(--text-sm);
-    color: var(--text-secondary);
+}
+
+.room {
+    gap: 6px;
+    font-size: var(--text-xs);
 }
 
 .dot {

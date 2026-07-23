@@ -4,6 +4,7 @@ import './globals.css';
 
 import ThemeProvider from '@/providers/ThemeProvider';
 import QueryProvider from '@/providers/QueryProvider';
+import { ThemeScript } from '@/utils/ThemeScript';
 
 export const metadata: Metadata = {
     title: 'NebulaX',
@@ -26,7 +27,10 @@ export default function RootLayout({
     children: React.ReactNode;
 }>) {
     return (
-        <html lang="en" data-theme="dark" className={`${geistSans.variable} ${geistMono.variable}`}>
+        <html lang="en" suppressHydrationWarning className={`${geistSans.variable} ${geistMono.variable}`}>
+            <head>
+                <ThemeScript />
+            </head>
             <body>
                 <ThemeProvider>
                     <QueryProvider>{children}</QueryProvider>

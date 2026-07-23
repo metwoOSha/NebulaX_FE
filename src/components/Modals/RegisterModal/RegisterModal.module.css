@@ -1,0 +1,63 @@
+.close {
+    composes: btn btnGhost from '@/components/Buttons/Buttons.module.css';
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    width: 32px;
+    height: 32px;
+    border-radius: var(--radius-full);
+}
+
+.header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 24px;
+}
+
+.headings {
+    text-align: center;
+}
+
+.title {
+    font-size: var(--text-xl);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+}
+
+.subtitle {
+    font-size: var(--text-sm);
+    color: var(--text-secondary);
+    margin-top: 2px;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.submit {
+    composes: btn btnPrimary from '@/components/Buttons/Buttons.module.css';
+    width: 100%;
+    margin-top: 6px;
+    padding: 13px;
+}
+
+.switch {
+    text-align: center;
+    margin-top: 18px;
+    font-size: var(--text-sm);
+    color: var(--text-secondary);
+}
+
+.switchLink {
+    color: var(--accent);
+    cursor: pointer;
+    font-weight: 500;
+}

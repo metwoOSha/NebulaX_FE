@@ -1,0 +1,18 @@
+.overlay {
+    composes: modalOverlay from '@/styles/mixins.module.css';
+}
+
+.dimmed {
+    background: var(--overlay);
+    -webkit-backdrop-filter: blur(6px);
+    backdrop-filter: blur(6px);
+}
+
+.card {
+    composes: glassStrong from '@/styles/mixins.module.css';
+    max-width: 100%;
+    padding: 36px 32px;
+    border-radius: var(--radius-xl);
+    position: relative;
+    margin: auto;
+}
