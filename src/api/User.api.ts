@@ -1,8 +1,9 @@
 import { User } from '@/types/user.types';
+import { patch } from './http';
 
-export type UpdateProfileBody = Partial<Pick<User, 'username' | 'name' | 'avatar_color_id'>>;
+export type UpdateProfileBody = Partial<Pick<User, 'username' | 'name' | 'avatar_color_id' | 'tags'>>;
 
-// TODO: no backend endpoint yet — stub until the real API is ready
-export async function updateProfile(body: UpdateProfileBody): Promise<UpdateProfileBody> {
-    return new Promise((resolve) => setTimeout(() => resolve(body), 300));
+export async function updateProfile(id: string, body: UpdateProfileBody): Promise<{ user: User }> {
+    const res = await patch(`/users/${id}`, body);
+    return res.json();
 }

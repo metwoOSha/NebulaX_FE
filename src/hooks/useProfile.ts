@@ -7,8 +7,9 @@ export function useProfile() {
     const { user, setUser } = useAuthStore();
 
     const handleUpdateProfile = async (data: UpdateProfileBody) => {
-        await updateProfile(data);
-        if (user) setUser({ ...user, ...data });
+        if (!user) return;
+        const res = await updateProfile(user.id, data);
+        setUser(res.user);
     };
 
     return { handleUpdateProfile };

@@ -3,22 +3,28 @@
 import CardBadge from '../CardBadge/CardBadge';
 import IconBadge from '../IconBadge/IconBadge';
 import OnlineStatus from '../OnlineStatus/OnlineStatus';
+import type { Room } from '@/types/room.types';
 import cls from './CardRoom.module.css';
 
-export default function CardRoom() {
+interface CardRoomProps {
+    room: Room;
+    badgeType: 'admin' | 'member' | 'join';
+    onClick?: () => void;
+}
+
+export default function CardRoom({ room, badgeType, onClick }: CardRoomProps) {
     return (
-        <div className={cls.roomCard}>
+        <div className={cls.roomCard} onClick={onClick}>
             <div className={cls.roomBody}>
                 <div className={cls.roomIcon}>
-                    <IconBadge tileId={1} size="md" />
-                    <span className={cls.roomBadge}>3</span>
+                    <IconBadge tileId={room.theme_id} size="md" />
                 </div>
                 <div className={cls.roomName}>
-                    <span>Squad Lobby</span>
+                    <span>{room.name}</span>
                 </div>
                 <div className={cls.roomMeta}>
-                    <OnlineStatus online={6} type="card" />
-                    <CardBadge type="admin" />
+                    <OnlineStatus online={0} type="card" />
+                    <CardBadge type={badgeType} />
                 </div>
             </div>
             <div className={cls.roomCardReveal}>

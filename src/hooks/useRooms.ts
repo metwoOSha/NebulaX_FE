@@ -1,16 +1,37 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { createRoom } from '@/api/Rooms.api';
-import type { CreateRoomBody } from '@/types/room.types';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { createRoom, getRooms, joinRoom } from '@/api/Rooms.api';
+import type { RoomsResponse } from '@/types/room.types';
 
 export function useRooms() {
     const router = useRouter();
+    const queryClient = useQueryClient();
 
-    const handleCreateRoom = async (data: CreateRoomBody) => {
-        const res = await createRoom(data);
-        router.push(`/room/${res.room.id}`);
-    };
+    const roomsQuery = useQuery({
+        queryKey: ['rooms'],
+        queryFn: async (): Promise<RoomsResponse> => {
+            return getRooms();
+        },
+        refetchOnMount: 'always',
+    });
 
-    return { handleCreateRoom };
+    const createRoomMutation = useMutation({
+        mutationFn: createRoom,
+        onSuccess: (res) => {
+            queryClient.invalidateQueries({ queryKey: ['rooms'] });
+            router.push(`/room/${res.room.id}`);
+        },
+    });
+
+    const joinRoomMutation = useMutation({
+        mutationFn: (id: string) => joinRoom(id),
+        onSuccess: (_res, id) => {
+            queryClient.invalidateQueries({ queryKey: ['rooms'] });
+            router.push(`/room/${id}`);
+        },
+    });
+
+    return { ...roomsQuery, createRoomMutation, joinRoomMutation };
 }

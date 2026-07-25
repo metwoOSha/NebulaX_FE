@@ -56,3 +56,14 @@
     letter-spacing: 0.06em;
     color: var(--text-tertiary);
 }
+
+.empty {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 150px;
+    margin: 0 4px;
+    font-size: var(--text-sm);
+    color: var(--text-tertiary);
+    text-align: center;
+}

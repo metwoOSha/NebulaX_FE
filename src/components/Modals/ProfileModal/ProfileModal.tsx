@@ -65,6 +65,11 @@ export default function ProfileModal({ onClose }: ProfileModalProps) {
 
     const [tagsOpen, setTagsOpen] = useState(false);
     const tagsPanelRef = useRef<HTMLDivElement>(null);
+    const [saveError, setSaveError] = useState<string | null>(null);
+
+    useEffect(() => {
+        if (user?.tags) setValue('tags', user.tags);
+    }, [user?.tags, setValue]);
 
     useEffect(() => {
         if (!tagsOpen) return;
@@ -88,13 +93,19 @@ export default function ProfileModal({ onClose }: ProfileModalProps) {
         };
     }, [tagsOpen]);
 
-    const submit = handleSubmit(async ({ username, name, avatarColorId }) => {
-        await handleUpdateProfile({
-            username: username || user?.username,
-            name: name || user?.name,
-            avatar_color_id: avatarColorId,
-        });
-        onClose();
+    const submit = handleSubmit(async ({ username, name, avatarColorId, tags }) => {
+        setSaveError(null);
+        try {
+            await handleUpdateProfile({
+                username: username || user?.username,
+                name: name || user?.name,
+                avatar_color_id: avatarColorId,
+                tags,
+            });
+            onClose();
+        } catch (error) {
+            setSaveError(error instanceof Error ? error.message : 'Failed to save changes');
+        }
     });
 
     const initials = user?.username?.charAt(0).toUpperCase() ?? 'U';
@@ -161,6 +172,8 @@ export default function ProfileModal({ onClose }: ProfileModalProps) {
                         />
                     )}
                 />
+
+                {saveError && <span className={cls.error}>{saveError}</span>}
 
                 <Buttons
                     type="primary"

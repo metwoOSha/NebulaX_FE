@@ -67,3 +67,9 @@
     width: 100%;
     padding: 13px 18px;
 }
+
+.error {
+    font-size: var(--text-sm);
+    color: var(--danger);
+    text-align: center;
+}

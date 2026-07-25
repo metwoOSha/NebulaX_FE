@@ -1,0 +1,43 @@
+.topBar {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: -6px;
+}
+
+.header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+}
+
+.title {
+    font-size: var(--text-lg);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+}
+
+.subtitle {
+    font-size: var(--text-sm);
+    color: var(--text-secondary);
+}
+
+.error {
+    display: block;
+    margin-top: 12px;
+    font-size: var(--text-sm);
+    color: var(--danger);
+    text-align: center;
+}
+
+.actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 24px;
+}
+
+.action {
+    flex: 1 1 0%;
+    padding: 13px;
+}
