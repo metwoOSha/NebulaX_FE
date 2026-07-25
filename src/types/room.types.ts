@@ -4,7 +4,6 @@ export interface Room {
     description: string;
     theme_id: number;
     created_at: string;
-    role?: 'admin' | 'member';
 }
 
 export type CreateRoomBody = {
