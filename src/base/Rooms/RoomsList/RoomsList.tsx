@@ -2,12 +2,19 @@
 
 import { useState } from 'react';
 import CreateRoom from '@/components/CreateRoom/CreateRoom';
-import CreateRoomModal from '@/components/Modals/CreateRoomModal/CreateRoomModal';
+import CreateRoomModal, { CreateRoomFormValues } from '@/components/Modals/CreateRoomModal/CreateRoomModal';
+import { useRooms } from '@/hooks/useRooms';
 import cls from './RoomsList.module.css';
 import CardRoom from '@/components/CardRoom/CardRoom';
 
 export default function RoomsList() {
     const [isCreateOpen, setCreateOpen] = useState(false);
+    const { handleCreateRoom } = useRooms();
+
+    const onCreateRoom = async ({ name, description, tileId }: CreateRoomFormValues) => {
+        await handleCreateRoom({ name, description, theme_id: tileId });
+        setCreateOpen(false);
+    };
 
     return (
         <div className={cls.rooms}>
@@ -31,9 +38,7 @@ export default function RoomsList() {
                 <CardRoom />
             </div>
 
-            {isCreateOpen && (
-                <CreateRoomModal onClose={() => setCreateOpen(false)} onSubmit={() => setCreateOpen(false)} />
-            )}
+            {isCreateOpen && <CreateRoomModal onClose={() => setCreateOpen(false)} onSubmit={onCreateRoom} />}
         </div>
     );
 }
