@@ -1,5 +1,6 @@
 'use client';
 
+import { useEffect, useRef, useState } from 'react';
 import { Controller, useForm, useWatch } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
@@ -7,6 +8,7 @@ import { z } from 'zod';
 import Buttons from '@/components/Buttons/Buttons';
 import Input from '@/components/Input/Input';
 import AvatarColorPicker from '@/components/AvatarColorPicker/AvatarColorPicker';
+import TagsPicker from '@/components/TagsPicker/TagsPicker';
 import { useAuthStore } from '@/store/authStore';
 import { useAuth } from '@/hooks/useAuth';
 import { useProfile } from '@/hooks/useProfile';
@@ -24,6 +26,7 @@ const profileSchema = z.object({
     username: editableField(3, 'At least 3 characters'),
     name: editableField(2, 'At least 2 characters'),
     avatarColorId: z.number().int().min(1).max(8),
+    tags: z.array(z.string()),
 });
 
 type ProfileFormValues = z.infer<typeof profileSchema>;
@@ -50,6 +53,7 @@ export default function ProfileModal({ onClose }: ProfileModalProps) {
             username: '',
             name: '',
             avatarColorId: user?.avatar_color_id ?? 1,
+            tags: [],
         },
     });
 
@@ -58,6 +62,31 @@ export default function ProfileModal({ onClose }: ProfileModalProps) {
     };
 
     const avatarColorId = useWatch({ control, name: 'avatarColorId' });
+
+    const [tagsOpen, setTagsOpen] = useState(false);
+    const tagsPanelRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        if (!tagsOpen) return;
+
+        const closeIfOutside = (e: Event) => {
+            const target = e.target as Node;
+            if (tagsPanelRef.current && !tagsPanelRef.current.contains(target)) {
+                setTagsOpen(false);
+            }
+        };
+
+        const closeIfOutsideOnFocus = (e: FocusEvent) => {
+            if ((e.target as HTMLElement).tagName === 'BUTTON') return;
+            closeIfOutside(e);
+        };
+        document.addEventListener('click', closeIfOutside, true);
+        document.addEventListener('focusin', closeIfOutsideOnFocus);
+        return () => {
+            document.removeEventListener('click', closeIfOutside, true);
+            document.removeEventListener('focusin', closeIfOutsideOnFocus);
+        };
+    }, [tagsOpen]);
 
     const submit = handleSubmit(async ({ username, name, avatarColorId }) => {
         await handleUpdateProfile({
@@ -118,6 +147,20 @@ export default function ProfileModal({ onClose }: ProfileModalProps) {
                         onFocus={revealOnFocus('name', user?.name ?? '')}
                     />
                 </div>
+
+                <Controller
+                    name="tags"
+                    control={control}
+                    render={({ field }) => (
+                        <TagsPicker
+                            value={field.value}
+                            onChange={field.onChange}
+                            open={tagsOpen}
+                            onOpenChange={setTagsOpen}
+                            panelRef={tagsPanelRef}
+                        />
+                    )}
+                />
 
                 <Buttons
                     type="primary"
