@@ -9,13 +9,14 @@ interface MemberItemProps {
     avatarColor: string;
     online: boolean;
     isYou?: boolean;
+    onClick?: () => void;
 }
 
-export default function MemberItem({ username, avatarColor, online, isYou }: MemberItemProps) {
+export default function MemberItem({ username, avatarColor, online, isYou, onClick }: MemberItemProps) {
     const initials = username.charAt(0).toUpperCase();
 
     return (
-        <div className={cls.member}>
+        <div className={cls.member} onClick={onClick}>
             <div className={clsx(cls.avatarWrap, !online && cls.offline)}>
                 <div
                     className={cls.avatar}

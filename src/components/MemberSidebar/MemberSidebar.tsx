@@ -1,11 +1,14 @@
 'use client';
 
+import { useState } from 'react';
 import cls from './MemberSidebar.module.css';
 import MemberItem from '@/components/MemberItem/MemberItem';
+import MemberProfileModal from '@/components/Modals/MemberProfileModal/MemberProfileModal';
 import { useSocketStore } from '@/store/socketStore';
 import { useAuthStore } from '@/store/authStore';
 import { useRoomMembers } from '@/hooks/useRoomMembers';
 import { getAvatarColorById } from '@/config/avatars.config';
+import type { RoomMember } from '@/types/room.types';
 
 interface MemberSidebarProps {
     roomId: string;
@@ -15,6 +18,7 @@ export default function MemberSidebar({ roomId }: MemberSidebarProps) {
     const { onlineUserIds } = useSocketStore();
     const { user } = useAuthStore();
     const { data } = useRoomMembers(roomId);
+    const [selectedMember, setSelectedMember] = useState<RoomMember | null>(null);
 
     const members = data?.members ?? [];
     const onlineIds = user && !onlineUserIds.includes(user.id) ? [...onlineUserIds, user.id] : onlineUserIds;
@@ -36,6 +40,7 @@ export default function MemberSidebar({ roomId }: MemberSidebarProps) {
                             avatarColor={getAvatarColorById(member.avatar_color_id)}
                             online
                             isYou={member.id === user?.id}
+                            onClick={() => setSelectedMember(member)}
                         />
                     ))}
                 </div>
@@ -53,12 +58,21 @@ export default function MemberSidebar({ roomId }: MemberSidebarProps) {
                                     avatarColor={getAvatarColorById(member.avatar_color_id)}
                                     online={false}
                                     isYou={member.id === user?.id}
+                                    onClick={() => setSelectedMember(member)}
                                 />
                             ))}
                         </div>
                     </>
                 )}
             </div>
+
+            {selectedMember && (
+                <MemberProfileModal
+                    member={selectedMember}
+                    online={onlineIds.includes(selectedMember.id)}
+                    onClose={() => setSelectedMember(null)}
+                />
+            )}
         </div>
     );
 }
