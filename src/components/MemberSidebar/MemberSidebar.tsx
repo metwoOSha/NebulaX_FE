@@ -18,8 +18,9 @@ export default function MemberSidebar({ roomId }: MemberSidebarProps) {
 
     const members = data?.members ?? [];
     const onlineIds = user && !onlineUserIds.includes(user.id) ? [...onlineUserIds, user.id] : onlineUserIds;
-    const onlineMembers = members.filter((member) => onlineIds.includes(member.id));
-    const offlineMembers = members.filter((member) => !onlineIds.includes(member.id));
+    const byYouFirst = (a: { id: string }, b: { id: string }) => Number(b.id === user?.id) - Number(a.id === user?.id);
+    const onlineMembers = members.filter((member) => onlineIds.includes(member.id)).sort(byYouFirst);
+    const offlineMembers = members.filter((member) => !onlineIds.includes(member.id)).sort(byYouFirst);
 
     return (
         <div className={cls.onlineSidebar}>
