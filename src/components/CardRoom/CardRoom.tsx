@@ -10,11 +10,12 @@ interface CardRoomProps {
     room: Room;
     badgeType: 'admin' | 'member' | 'join';
     onClick?: () => void;
+    onContextMenu?: (e: React.MouseEvent) => void;
 }
 
-export default function CardRoom({ room, badgeType, onClick }: CardRoomProps) {
+export default function CardRoom({ room, badgeType, onClick, onContextMenu }: CardRoomProps) {
     return (
-        <div className={cls.roomCard} onClick={onClick}>
+        <div className={cls.roomCard} onClick={onClick} onContextMenu={onContextMenu}>
             <div className={cls.roomBody}>
                 <div className={cls.roomIcon}>
                     <IconBadge tileId={room.theme_id} size="md" />

@@ -24,11 +24,13 @@ export type CreateRoomFormValues = z.infer<typeof createRoomSchema>;
 interface CreateRoomModalProps {
     onClose: () => void;
     onSubmit?: (values: CreateRoomFormValues) => void;
+    mode?: 'create' | 'edit';
+    initialValues?: CreateRoomFormValues;
 }
 
 type OpenSection = 'theme' | 'tags' | null;
 
-export default function CreateRoomModal({ onClose, onSubmit }: CreateRoomModalProps) {
+export default function CreateRoomModal({ onClose, onSubmit, mode = 'create', initialValues }: CreateRoomModalProps) {
     const {
         control,
         register,
@@ -36,7 +38,7 @@ export default function CreateRoomModal({ onClose, onSubmit }: CreateRoomModalPr
         formState: { errors, isSubmitting },
     } = useForm<CreateRoomFormValues>({
         resolver: zodResolver(createRoomSchema),
-        defaultValues: { name: '', description: '', tileId: 5, tags: [] },
+        defaultValues: initialValues ?? { name: '', description: '', tileId: 5, tags: [] },
     });
 
     const [openSection, setOpenSection] = useState<OpenSection>('theme');
@@ -73,7 +75,7 @@ export default function CreateRoomModal({ onClose, onSubmit }: CreateRoomModalPr
     return (
         <ModalOverlay width={400} padding="26px">
             <div className={cls.header}>
-                <span className={cls.title}>Create room</span>
+                <span className={cls.title}>{mode === 'edit' ? 'Edit room' : 'Create room'}</span>
                 <Buttons type="close" compact onClick={onClose} className={cls.close} />
             </div>
 
@@ -134,7 +136,7 @@ export default function CreateRoomModal({ onClose, onSubmit }: CreateRoomModalPr
                     <Buttons
                         type="primary"
                         htmlType="submit"
-                        label="Create room"
+                        label={mode === 'edit' ? 'Save changes' : 'Create room'}
                         disabled={isSubmitting}
                         className={cls.action}
                     />

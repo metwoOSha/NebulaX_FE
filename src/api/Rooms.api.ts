@@ -1,5 +1,5 @@
-import { CreateRoomBody, Room, RoomMember } from '@/types/room.types';
-import { del, get, post } from './http';
+import { CreateRoomBody, Room, RoomMember, UpdateRoomBody } from '@/types/room.types';
+import { del, get, patch, post } from './http';
 
 const ROOM = (id: string) => `/rooms/${id}`;
 
@@ -20,6 +20,16 @@ export async function getRoomMembers(id: string): Promise<{ members: RoomMember[
 
 export async function createRoom(body: CreateRoomBody) {
     const res = await post('/rooms', body);
+    return res.json();
+}
+
+export async function updateRoom(id: string, body: UpdateRoomBody) {
+    const res = await patch(ROOM(id), body);
+    return res.json();
+}
+
+export async function deleteRoom(id: string) {
+    const res = await del(ROOM(id));
     return res.json();
 }
 

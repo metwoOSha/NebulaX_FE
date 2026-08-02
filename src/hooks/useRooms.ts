@@ -2,8 +2,8 @@
 
 import { useRouter } from 'next/navigation';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { createRoom, getRooms, joinRoom } from '@/api/Rooms.api';
-import type { RoomsResponse } from '@/types/room.types';
+import { createRoom, deleteRoom, getRooms, joinRoom, leaveRoom, updateRoom } from '@/api/Rooms.api';
+import type { RoomsResponse, UpdateRoomBody } from '@/types/room.types';
 
 export function useRooms() {
     const router = useRouter();
@@ -33,5 +33,34 @@ export function useRooms() {
         },
     });
 
-    return { ...roomsQuery, createRoomMutation, joinRoomMutation };
+    const updateRoomMutation = useMutation({
+        mutationFn: ({ id, body }: { id: string; body: UpdateRoomBody }) => updateRoom(id, body),
+        onSuccess: (_res, { id }) => {
+            queryClient.invalidateQueries({ queryKey: ['rooms'] });
+            queryClient.invalidateQueries({ queryKey: ['room', id] });
+        },
+    });
+
+    const deleteRoomMutation = useMutation({
+        mutationFn: (id: string) => deleteRoom(id),
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['rooms'] });
+        },
+    });
+
+    const leaveRoomMutation = useMutation({
+        mutationFn: (id: string) => leaveRoom(id),
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['rooms'] });
+        },
+    });
+
+    return {
+        ...roomsQuery,
+        createRoomMutation,
+        joinRoomMutation,
+        updateRoomMutation,
+        deleteRoomMutation,
+        leaveRoomMutation,
+    };
 }

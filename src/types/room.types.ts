@@ -5,12 +5,21 @@ export interface Room {
     theme_id: number;
     created_at: string;
     online_count?: number;
+    tags?: string[];
 }
 
 export type CreateRoomBody = {
     name: string;
     description: string;
     theme_id: number;
+    tags: string[];
+};
+
+export type UpdateRoomBody = {
+    name: string;
+    description: string;
+    theme_id: number;
+    tags: string[];
 };
 
 export interface RoomsResponse {
