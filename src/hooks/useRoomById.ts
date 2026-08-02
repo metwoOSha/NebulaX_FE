@@ -13,8 +13,13 @@ export function useRoomById(roomId: string) {
         staleTime: 5 * 60 * 1000,
         initialData: () => {
             const rooms = queryClient.getQueryData<RoomsResponse>(['rooms']);
-            const room = rooms?.my.find((r) => r.id === roomId) ?? rooms?.joined.find((r) => r.id === roomId);
-            return room ? { room } : undefined;
+            const myRoom = rooms?.my.find((r) => r.id === roomId);
+            if (myRoom) return { room: { ...myRoom, role: 'admin' as const } };
+
+            const joinedRoom = rooms?.joined.find((r) => r.id === roomId);
+            if (joinedRoom) return { room: { ...joinedRoom, role: 'member' as const } };
+
+            return undefined;
         },
     });
 }

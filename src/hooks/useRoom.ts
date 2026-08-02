@@ -18,14 +18,14 @@ interface TypingUser {
     username: string;
 }
 
-export function useRoom(roomId: string) {
+export function useRoom(roomId: string, enabled = true) {
     const { socket, onlineUserIds, setOnlineUserIds } = useSocketStore();
     const { user } = useAuthStore();
     const [messages, setMessages] = useState<Message[]>([]);
     const [typingUsers, setTypingUsers] = useState<TypingUser[]>([]);
 
     useEffect(() => {
-        if (!socket || !roomId) return;
+        if (!socket || !roomId || !enabled) return;
 
         socket.emit('join_room', roomId);
 
@@ -50,7 +50,7 @@ export function useRoom(roomId: string) {
             socket.off('online_users');
             socket.off('typing');
         };
-    }, [socket, roomId, setOnlineUserIds]);
+    }, [socket, roomId, enabled, setOnlineUserIds]);
 
     const sendMessage = (text: string) => {
         socket?.emit('message', { roomId, text });

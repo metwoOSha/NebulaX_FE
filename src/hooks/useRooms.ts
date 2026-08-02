@@ -29,6 +29,8 @@ export function useRooms() {
         mutationFn: (id: string) => joinRoom(id),
         onSuccess: (_res, id) => {
             queryClient.invalidateQueries({ queryKey: ['rooms'] });
+            queryClient.invalidateQueries({ queryKey: ['room', id] });
+            queryClient.invalidateQueries({ queryKey: ['room-members', id] });
             router.push(`/room/${id}`);
         },
     });

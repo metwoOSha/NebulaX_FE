@@ -6,6 +6,7 @@ export interface Room {
     created_at: string;
     online_count?: number;
     tags?: string[];
+    role?: 'admin' | 'member' | null;
 }
 
 export type CreateRoomBody = {
