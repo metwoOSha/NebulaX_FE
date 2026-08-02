@@ -56,7 +56,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
             ref={ref}
             type="text"
             className={clsx(cls.input, className)}
-            placeholder={placeholder ?? 'Message Late Night Co-op'}
+            placeholder={placeholder ?? 'Message…'}
             {...props}
         />
     );

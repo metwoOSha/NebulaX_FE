@@ -1,4 +1,4 @@
-import { CreateRoomBody } from '@/types/room.types';
+import { CreateRoomBody, Room, RoomMember } from '@/types/room.types';
 import { del, get, post } from './http';
 
 const ROOM = (id: string) => `/rooms/${id}`;
@@ -8,8 +8,13 @@ export async function getRooms() {
     return res.json();
 }
 
-export async function getRoomById(id: string) {
+export async function getRoomById(id: string): Promise<{ room: Room }> {
     const res = await get(ROOM(id));
+    return res.json();
+}
+
+export async function getRoomMembers(id: string): Promise<{ members: RoomMember[] }> {
+    const res = await get(`${ROOM(id)}/members`);
     return res.json();
 }
 

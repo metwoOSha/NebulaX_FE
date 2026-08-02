@@ -18,9 +18,8 @@ interface TypingUser {
 }
 
 export function useRoom(roomId: string) {
-    const { socket } = useSocketStore();
+    const { socket, onlineUserIds, setOnlineUserIds } = useSocketStore();
     const [messages, setMessages] = useState<Message[]>([]);
-    const [onlineUsers, setOnlineUsers] = useState<string[]>([]);
     const [typingUsers, setTypingUsers] = useState<TypingUser[]>([]);
 
     useEffect(() => {
@@ -33,7 +32,7 @@ export function useRoom(roomId: string) {
         });
 
         socket.on('online_users', (users: string[]) => {
-            setOnlineUsers(users);
+            setOnlineUserIds(users);
         });
 
         socket.on('typing', (data: TypingUser) => {
@@ -49,7 +48,7 @@ export function useRoom(roomId: string) {
             socket.off('online_users');
             socket.off('typing');
         };
-    }, [socket, roomId]);
+    }, [socket, roomId, setOnlineUserIds]);
 
     const sendMessage = (text: string) => {
         socket?.emit('message', { roomId, text });
@@ -59,5 +58,5 @@ export function useRoom(roomId: string) {
         socket?.emit('typing', { roomId });
     };
 
-    return { messages, onlineUsers, typingUsers, sendMessage, sendTyping };
+    return { messages, onlineUsers: onlineUserIds, typingUsers, sendMessage, sendTyping };
 }
