@@ -42,7 +42,8 @@ export default function MemberProfileModal({ member, online, onClose }: MemberPr
                     <span className={clsx(cls.status, online ? cls.online : cls.offline)} />
                 </div>
 
-                <div className={cls.name}>{profile?.name || member.username}</div>
+                <div className={cls.name}>{profile?.name ?? member.username}</div>
+                <div className={cls.username}>@{member.username}</div>
                 <div className={clsx(cls.presence, online ? cls.presenceOnline : cls.presenceOffline)}>
                     {online ? 'Online' : 'Offline'}
                 </div>
