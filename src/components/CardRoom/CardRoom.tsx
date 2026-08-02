@@ -23,7 +23,7 @@ export default function CardRoom({ room, badgeType, onClick }: CardRoomProps) {
                     <span>{room.name}</span>
                 </div>
                 <div className={cls.roomMeta}>
-                    <OnlineStatus online={0} type="card" />
+                    <OnlineStatus online={room.online_count ?? 0} type="card" />
                     <CardBadge type={badgeType} />
                 </div>
             </div>

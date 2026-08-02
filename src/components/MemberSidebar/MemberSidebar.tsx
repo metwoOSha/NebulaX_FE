@@ -2,37 +2,60 @@
 
 import cls from './MemberSidebar.module.css';
 import MemberItem from '@/components/MemberItem/MemberItem';
+import { useSocketStore } from '@/store/socketStore';
+import { useAuthStore } from '@/store/authStore';
+import { useRoomMembers } from '@/hooks/useRoomMembers';
+import { getAvatarColorById } from '@/config/avatars.config';
 
-const ONLINE_MEMBERS = [
-    { username: 'Nova', avatarColor: '#5865f2', isYou: true },
-    { username: 'Alex', avatarColor: '#3ba55d' },
-    { username: 'Sam', avatarColor: '#00a8fc' },
-    { username: 'Jordan', avatarColor: '#faa61a' },
-    { username: 'Casey', avatarColor: '#eb459e' },
-];
+interface MemberSidebarProps {
+    roomId: string;
+}
 
-const OFFLINE_MEMBERS = [{ username: 'Riley', avatarColor: '#9b59b6' }];
+export default function MemberSidebar({ roomId }: MemberSidebarProps) {
+    const { onlineUserIds } = useSocketStore();
+    const { user } = useAuthStore();
+    const { data } = useRoomMembers(roomId);
 
-export default function MemberSidebar() {
+    const members = data?.members ?? [];
+    const onlineMembers = members.filter((member) => onlineUserIds.includes(member.id));
+    const offlineMembers = members.filter((member) => !onlineUserIds.includes(member.id));
+
     return (
         <div className={cls.onlineSidebar}>
             <div className={cls.onlineBlock}>
                 <div className={cls.label}>
-                    Online — <span>{ONLINE_MEMBERS.length}</span>
+                    Online — <span>{onlineMembers.length}</span>
                 </div>
                 <div className={cls.onlineList}>
-                    {ONLINE_MEMBERS.map((member) => (
-                        <MemberItem key={member.username} {...member} online />
+                    {onlineMembers.map((member) => (
+                        <MemberItem
+                            key={member.id}
+                            username={member.username}
+                            avatarColor={getAvatarColorById(member.avatar_color_id)}
+                            online
+                            isYou={member.id === user?.id}
+                        />
                     ))}
                 </div>
-                <div className={cls.label}>
-                    Offline — <span>{OFFLINE_MEMBERS.length}</span>
-                </div>
-                <div className={cls.offlinelist}>
-                    {OFFLINE_MEMBERS.map((member) => (
-                        <MemberItem key={member.username} {...member} online={false} />
-                    ))}
-                </div>
+
+                {offlineMembers.length > 0 && (
+                    <>
+                        <div className={cls.label}>
+                            Offline — <span>{offlineMembers.length}</span>
+                        </div>
+                        <div className={cls.offlineList}>
+                            {offlineMembers.map((member) => (
+                                <MemberItem
+                                    key={member.id}
+                                    username={member.username}
+                                    avatarColor={getAvatarColorById(member.avatar_color_id)}
+                                    online={false}
+                                    isYou={member.id === user?.id}
+                                />
+                            ))}
+                        </div>
+                    </>
+                )}
             </div>
         </div>
     );

@@ -4,6 +4,7 @@ export interface Room {
     description: string;
     theme_id: number;
     created_at: string;
+    online_count?: number;
 }
 
 export type CreateRoomBody = {
@@ -16,4 +17,11 @@ export interface RoomsResponse {
     my: Room[];
     joined: Room[];
     recommended: Room[];
+}
+
+export interface RoomMember {
+    id: string;
+    username: string;
+    avatar_color_id: number;
+    role: 'admin' | 'member';
 }

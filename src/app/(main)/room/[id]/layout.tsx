@@ -1,9 +1,12 @@
 import RoomLayout from '@/layout/RoomLayout/RoomLayout';
 
-export default function Layout({
+export default async function Layout({
     children,
+    params,
 }: Readonly<{
     children: React.ReactNode;
+    params: Promise<{ id: string }>;
 }>) {
-    return <RoomLayout>{children}</RoomLayout>;
+    const { id } = await params;
+    return <RoomLayout roomId={id}>{children}</RoomLayout>;
 }

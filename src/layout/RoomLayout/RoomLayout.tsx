@@ -8,7 +8,7 @@ import RoomsSidebar from '@/components/RoomsSidebar/RoomsSidebar';
 import MemberSidebar from '@/components/MemberSidebar/MemberSidebar';
 import { useSidebarStore } from '@/store/sidebarStore';
 
-export default function RoomLayout({ children }: { children: React.ReactNode }) {
+export default function RoomLayout({ children, roomId }: { children: React.ReactNode; roomId: string }) {
     const {
         isRoomsSidebarOpen,
         isMembersSidebarOpen,
@@ -57,7 +57,7 @@ export default function RoomLayout({ children }: { children: React.ReactNode }) 
             {/* Positioned absolutely (see MemberSidebar.module.css) so it overlays the content Panel
                 instead of sitting in the flex row — mounting/unmounting it never resizes Group's own
                 box, so it can't trigger the layout corruption the rooms Panel above works around. */}
-            {isMembersSidebarOpen && <MemberSidebar />}
+            {isMembersSidebarOpen && <MemberSidebar roomId={roomId} />}
         </div>
     );
 }
