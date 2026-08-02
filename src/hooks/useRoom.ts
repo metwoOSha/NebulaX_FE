@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useSocketStore } from '@/store/socketStore';
+import { useAuthStore } from '@/store/authStore';
 
 interface Message {
     id: string;
@@ -19,6 +20,7 @@ interface TypingUser {
 
 export function useRoom(roomId: string) {
     const { socket, onlineUserIds, setOnlineUserIds } = useSocketStore();
+    const { user } = useAuthStore();
     const [messages, setMessages] = useState<Message[]>([]);
     const [typingUsers, setTypingUsers] = useState<TypingUser[]>([]);
 
@@ -58,5 +60,7 @@ export function useRoom(roomId: string) {
         socket?.emit('typing', { roomId });
     };
 
-    return { messages, onlineUsers: onlineUserIds, typingUsers, sendMessage, sendTyping };
+    const onlineUsers = user && !onlineUserIds.includes(user.id) ? [...onlineUserIds, user.id] : onlineUserIds;
+
+    return { messages, onlineUsers, typingUsers, sendMessage, sendTyping };
 }
