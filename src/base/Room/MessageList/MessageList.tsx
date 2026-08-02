@@ -5,6 +5,7 @@ import dayjs from 'dayjs';
 import { getAvatarColorById } from '@/config/avatars.config';
 import cls from './MessageList.module.css';
 import Message from '../Message/Message';
+import MessageListSkeleton from './MessageListSkeleton';
 
 interface MessageItem {
     id: string;
@@ -20,9 +21,16 @@ interface MessageListProps {
     currentUserId?: string;
     hasNextPage?: boolean;
     onLoadMore?: () => void;
+    loadingMessages?: boolean;
 }
 
-export default function MessageList({ messages, currentUserId, hasNextPage, onLoadMore }: MessageListProps) {
+export default function MessageList({
+    messages,
+    currentUserId,
+    hasNextPage,
+    onLoadMore,
+    loadingMessages,
+}: MessageListProps) {
     const containerRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
@@ -40,6 +48,14 @@ export default function MessageList({ messages, currentUserId, hasNextPage, onLo
             onLoadMore?.();
         }
     };
+
+    if (loadingMessages) {
+        return (
+            <div className={cls.messageList}>
+                <MessageListSkeleton />
+            </div>
+        );
+    }
 
     return (
         <div className={cls.messageList} ref={containerRef} onScroll={handleScroll}>

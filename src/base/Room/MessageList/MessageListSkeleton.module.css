@@ -1,0 +1,26 @@
+.list {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.row {
+    display: flex;
+    gap: 10px;
+    align-items: flex-end;
+}
+
+.rowOutgoing {
+    justify-content: flex-end;
+}
+
+.avatar {
+    flex-shrink: 0;
+    width: 28px;
+    height: 28px;
+    border-radius: var(--radius-full);
+}
+
+.bar {
+    border-radius: var(--radius-md);
+}

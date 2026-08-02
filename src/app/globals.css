@@ -82,6 +82,10 @@
     );
     --room-card-sweep-opacity: 0.14;
     --room-card-sheen-bg: linear-gradient(180deg, rgba(255, 255, 255, 0.1), transparent);
+
+    /* skeleton loaders */
+    --skeleton-base: rgba(255, 255, 255, 0.06);
+    --skeleton-shine: rgba(255, 255, 255, 0.16);
 }
 
 [data-theme='light'] {
@@ -158,6 +162,10 @@
     --room-card-sweep-bg: #ffffff;
     --room-card-sweep-opacity: 1;
     --room-card-sheen-bg: transparent;
+
+    /* skeleton loaders */
+    --skeleton-base: rgba(23, 23, 28, 0.06);
+    --skeleton-shine: rgba(23, 23, 28, 0.13);
 }
 
 :root {
@@ -246,4 +254,23 @@ body {
     display: none !important;
     width: 0 !important;
     height: 0 !important;
+}
+
+.skeleton {
+    position: relative;
+    overflow: hidden;
+    background: var(--skeleton-base);
+}
+.skeleton::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, transparent, var(--skeleton-shine), transparent);
+    transform: translateX(-100%);
+    animation: skeleton-shine 1.6s ease-in-out infinite;
+}
+@keyframes skeleton-shine {
+    100% {
+        transform: translateX(100%);
+    }
 }

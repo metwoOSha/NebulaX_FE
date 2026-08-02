@@ -21,3 +21,8 @@
     flex-direction: column;
     gap: 4px;
 }
+
+.skeletonItem {
+    height: 40px;
+    border-radius: var(--radius-sm);
+}
