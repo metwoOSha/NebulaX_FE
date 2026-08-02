@@ -22,3 +22,8 @@ export async function getMe() {
     const res = await get(GET_AUTH('me'));
     return res.json();
 }
+
+export async function getSocketToken(): Promise<{ token: string }> {
+    const res = await get(GET_AUTH('socket-token'));
+    return res.json();
+}

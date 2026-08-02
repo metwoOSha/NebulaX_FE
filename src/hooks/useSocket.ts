@@ -2,6 +2,7 @@
 
 import { useEffect } from 'react';
 import { io } from 'socket.io-client';
+import { getSocketToken } from '@/api/Auth.api';
 import { useAuthStore } from '@/store/authStore';
 import { useSocketStore } from '@/store/socketStore';
 
@@ -12,17 +13,26 @@ export function useSocket() {
     useEffect(() => {
         if (!user) return;
 
-        const socket = io(process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001', {
-            withCredentials: true,
+        let cancelled = false;
+        let socket: ReturnType<typeof io> | undefined;
+
+        getSocketToken().then(({ token }) => {
+            if (cancelled) return;
+
+            socket = io(process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001', {
+                withCredentials: true,
+                auth: { token },
+            });
+
+            socket.on('connect', () => console.log('Socket connected:', socket?.id));
+            socket.on('disconnect', () => console.log('Socket disconnected'));
+
+            setSocket(socket);
         });
 
-        socket.on('connect', () => console.log('Socket connected:', socket.id));
-        socket.on('disconnect', () => console.log('Socket disconnected'));
-
-        setSocket(socket);
-
         return () => {
-            socket.disconnect();
+            cancelled = true;
+            socket?.disconnect();
             setSocket(null);
         };
     }, [user]); // eslint-disable-line react-hooks/exhaustive-deps
