@@ -15,6 +15,7 @@ export const SIZES = {
     md: { box: 40, radius: 14, iconSize: 20 },
     sm: { box: 30, radius: 11, iconSize: 15 },
     label: { box: 30, radius: 9, iconSize: 16 },
+    collapsed: { box: 40, radius: 12, iconSize: 21 },
 };
 
 export type Size = keyof typeof SIZES;

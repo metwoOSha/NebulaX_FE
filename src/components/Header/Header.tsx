@@ -8,6 +8,7 @@ import ProfileModal from '../Modals/ProfileModal/ProfileModal';
 import cls from './Header.module.css';
 
 import { useAuthStore } from '@/store/authStore';
+import { useSidebarStore } from '@/store/sidebarStore';
 import { getAvatarColorById } from '@/config/avatars.config';
 
 export default function Header() {
@@ -17,18 +18,34 @@ export default function Header() {
     const isRoom = pathname.startsWith('/room/');
 
     const { user } = useAuthStore();
+    const { isRoomsSidebarOpen, isMembersSidebarOpen, toggleRoomsSidebarOpen, toggleMembersSidebar } =
+        useSidebarStore();
     const [isProfileOpen, setProfileOpen] = useState(false);
 
     return (
         <header className={cls.header}>
             <div className={cls.leftSide}>
-                {isRoom && <Buttons type="back" onClick={() => router.back()} />}
+                {isRoom && <Buttons type="back" onClick={() => router.push('/')} />}
                 <IconBadge tileId={0} size="label" />
                 <span className={cls.logoTitle}>NebulaX</span>
             </div>
             <div className={cls.rightSide}>
-                {isRoom && <Buttons type="action" action="menu" onClick={() => {}} />}
-                {isRoom && <Buttons type="action" action="members" onClick={() => {}} />}
+                {isRoom && (
+                    <Buttons
+                        type="action"
+                        action="menu"
+                        isActive={isRoomsSidebarOpen}
+                        onClick={toggleRoomsSidebarOpen}
+                    />
+                )}
+                {isRoom && (
+                    <Buttons
+                        type="action"
+                        action="members"
+                        isActive={isMembersSidebarOpen}
+                        onClick={toggleMembersSidebar}
+                    />
+                )}
                 <Buttons type="action" action="theme" />
                 <Buttons
                     type="profile"

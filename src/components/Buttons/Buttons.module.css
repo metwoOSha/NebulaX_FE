@@ -6,15 +6,18 @@
     width: 38px;
     height: 38px;
     border-radius: var(--radius-full);
-    border: none;
+    border: 1px solid var(--glass-border);
     background: var(--glass-bg);
     cursor: pointer;
     color: var(--text-primary);
-    transition: background 0.15s;
+    transition:
+        background 0.15s,
+        transform 0.15s;
 }
 
 .back:hover {
     background: var(--glass-bg-strong);
+    transform: translateX(-2px);
 }
 
 .action {
@@ -23,7 +26,7 @@
     justify-content: center;
     padding: 8px 11px;
     border-radius: var(--radius-sm);
-    border: none;
+    border: 1px solid var(--glass-border);
     background: transparent;
     cursor: pointer;
     color: var(--text-secondary);
@@ -121,12 +124,6 @@
     border-radius: var(--radius-full);
 }
 
-.iconGhost {
-    width: 38px;
-    height: 38px;
-    padding: 0;
-}
-
 .profile {
     display: flex;
     align-items: center;
@@ -143,6 +140,16 @@
     font-size: var(--text-sm);
     font-weight: 600;
     color: #fff;
+}
+
+.profileSm {
+    width: 28px;
+    height: 28px;
+    flex-shrink: 0;
+}
+
+.profileSm span {
+    font-size: 11px;
 }
 
 .send {

@@ -1,12 +1,30 @@
-'use cleint';
+'use client';
+
+import { usePathname } from 'next/navigation';
 
 import cls from './RoomsSidebar.module.css';
+import RoomListItem from '@/components/RoomListItem/RoomListItem';
+import { useRooms } from '@/hooks/useRooms';
 
-export default function RoomsSidebar() {
+export default function RoomsSidebar({ isCollapsed }: { isCollapsed?: boolean }) {
+    const pathname = usePathname();
+    const { data } = useRooms();
+
+    const rooms = [...(data?.my ?? []), ...(data?.joined ?? [])];
+
     return (
         <aside className={cls.sidebar}>
-            <div className={cls.label}>My rooms</div>
-            <div></div>
+            {!isCollapsed && <div className={cls.label}>My rooms</div>}
+            <div className={cls.list}>
+                {rooms.map((room) => (
+                    <RoomListItem
+                        key={room.id}
+                        room={room}
+                        isActive={pathname === `/room/${room.id}`}
+                        isCollapsed={isCollapsed}
+                    />
+                ))}
+            </div>
         </aside>
     );
 }

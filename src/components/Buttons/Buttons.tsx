@@ -56,11 +56,7 @@ export default function Buttons({
 
     if (type === 'action' && action === 'theme') {
         return (
-            <button
-                className={clsx(cls.btn, cls.btnGhost, cls.iconGhost, className)}
-                onClick={toggleTheme}
-                aria-label={ariaLabel ?? 'theme'}
-            >
+            <button className={clsx(cls.action, className)} onClick={toggleTheme} aria-label={ariaLabel ?? 'theme'}>
                 {theme === 'dark' ? <SunIcon /> : <MoonIcon />}
             </button>
         );
@@ -83,7 +79,7 @@ export default function Buttons({
 
         return (
             <button
-                className={clsx(cls.profile, className)}
+                className={clsx(cls.profile, compact && cls.profileSm, className)}
                 onClick={onClick}
                 aria-label={ariaLabel ?? 'Profile'}
                 style={{ backgroundImage: `linear-gradient(${avatarColor}, ${avatarColor})` }}
@@ -95,7 +91,12 @@ export default function Buttons({
 
     if (type === 'send') {
         return (
-            <button className={clsx(cls.btn, cls.send, className)} onClick={onClick} aria-label={ariaLabel ?? 'Send'}>
+            <button
+                className={clsx(cls.btn, cls.send, className)}
+                onClick={onClick}
+                disabled={disabled}
+                aria-label={ariaLabel ?? 'Send'}
+            >
                 ↑
             </button>
         );

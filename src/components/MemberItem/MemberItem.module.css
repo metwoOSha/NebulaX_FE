@@ -1,0 +1,78 @@
+.member {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    padding: 6px 8px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.12s;
+}
+
+.member:hover {
+    background: var(--glass-bg);
+}
+
+.avatarWrap {
+    position: relative;
+    flex-shrink: 0;
+    opacity: 1;
+}
+
+.avatarWrap.offline {
+    opacity: 0.4;
+}
+
+.avatar {
+    width: 34px;
+    height: 34px;
+    border-radius: var(--radius-full);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 700;
+    color: #fff;
+}
+
+.status {
+    position: absolute;
+    right: -2px;
+    bottom: -2px;
+    width: 12px;
+    height: 12px;
+    border-radius: var(--radius-full);
+    border: 2.5px solid var(--bg-base);
+}
+
+.online {
+    background: var(--online);
+    box-shadow: 0 0 7px var(--online-glow);
+}
+
+.offlineDot {
+    background: var(--offline);
+    box-shadow: none;
+}
+
+.username {
+    font-size: var(--text-sm);
+    font-weight: 500;
+    color: var(--text-primary);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.usernameOffline {
+    color: var(--text-tertiary);
+}
+
+.youBadge {
+    flex-shrink: 0;
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--accent);
+    background: var(--accent-soft);
+    padding: 3px 8px;
+    border-radius: var(--radius-full);
+}

@@ -1,0 +1,80 @@
+.roomItem {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px;
+    border-radius: 12px;
+    cursor: pointer;
+    background: transparent;
+    border: 1px solid transparent;
+    text-decoration: none;
+    outline: none;
+    transition: background 0.14s;
+}
+
+.roomItem:hover {
+    background: var(--glass-bg);
+}
+
+.roomItem:focus-visible {
+    box-shadow: 0 0 0 2px var(--accent);
+}
+
+.roomItemActive {
+    background: var(--accent-soft);
+    border: 1px solid var(--glass-border-hi);
+}
+
+.roomItem.roomItemActive:hover {
+    background: var(--accent-soft);
+}
+
+.roomItemCollapsed {
+    position: relative;
+    align-self: center;
+    justify-content: center;
+    padding: 2px;
+    border-radius: 13px;
+    background: transparent;
+    border: none;
+    transition: transform 0.12s;
+}
+
+.roomItemCollapsed:hover {
+    transform: scale(1.08);
+}
+
+.roomItemCollapsed.roomItemActive:hover {
+    transform: none;
+}
+
+.roomItemCollapsed.roomItemActive {
+    background: transparent;
+    border: none;
+    box-shadow: 0 0 0 2px var(--accent);
+}
+
+.name {
+    flex: 1 1 0%;
+    font-size: var(--text-sm);
+    font-weight: 500;
+    color: var(--text-primary);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 16px;
+    height: 16px;
+    padding: 0 4px;
+    border-radius: var(--radius-full);
+    font-size: 10px;
+    font-weight: 700;
+    background: var(--unread);
+    color: var(--on-accent);
+    box-shadow: 0 0 10px var(--accent-glow);
+}

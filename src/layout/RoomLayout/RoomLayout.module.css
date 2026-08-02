@@ -1,8 +1,13 @@
 .wrapper {
+    position: relative;
     flex: 1 1 0%;
     display: flex;
     gap: 0px;
     min-height: 0px;
+}
+
+.contentPadded {
+    padding-right: calc(248px + var(--island-gap));
 }
 
 .resizer {
@@ -12,6 +17,28 @@
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+.resizerHidden {
+    display: none;
+}
+
+/* Safety-net cap: the library's own maxSize={420} constraint should already stop drag at 420px,
+   but its internal pixel<->percentage conversion can drift, so this pins the visual ceiling too. */
+:global(#rooms-sidebar-panel) {
+    max-width: 420px;
+}
+
+.roomsClosed :global(#rooms-sidebar-panel) {
+    flex: 0 0 0px !important;
+    width: 0 !important;
+    min-width: 0 !important;
+    overflow: hidden !important;
+    pointer-events: none;
+}
+
+.roomsClosed :global(#room-content-panel) {
+    flex: 1 1 auto !important;
 }
 
 .resizerBar {
