@@ -1,5 +1,6 @@
 import RoomChat from '@/base/Room/RoomChat/RoomChat';
 
-export default function page({ params }: { params: { id: string } }) {
-    return <RoomChat roomId={params.id} />;
+export default async function Page({ params }: { params: Promise<{ id: string }> }) {
+    const { id } = await params;
+    return <RoomChat roomId={id} />;
 }
