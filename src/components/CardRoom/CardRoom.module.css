@@ -149,9 +149,6 @@
     transition: transform 0.2s ease;
 }
 
-/* Hover-only effects — gated so tapping on a touch device (which browsers simulate as a
-   hover state) never triggers this reveal animation right before navigating away. Only
-   devices with a real mouse (fine pointer + true hover support) get it. */
 @media (hover: hover) and (pointer: fine) {
     .roomCard:hover {
         border-color: transparent;

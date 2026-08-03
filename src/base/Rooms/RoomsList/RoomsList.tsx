@@ -56,7 +56,7 @@ export default function RoomsList() {
 
     const openMenu = (e: React.MouseEvent, room: Room, isAdmin: boolean) => {
         e.preventDefault();
-        setMenu({ room, x: e.clientX, y: e.clientY, isAdmin });
+        setMenu((current) => (current?.room.id === room.id ? null : { room, x: e.clientX, y: e.clientY, isAdmin }));
     };
 
     const handleCopyLink = async (room: Room) => {

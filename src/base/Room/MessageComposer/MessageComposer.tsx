@@ -24,8 +24,6 @@ export default function MessageComposer({ roomName, onSend, onTyping }: MessageC
     };
 
     const handleFocus = () => {
-        // Give the mobile keyboard/visual-viewport a moment to open before scrolling —
-        // scrolling immediately measures against the pre-keyboard viewport height.
         setTimeout(() => {
             inputRef.current?.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
         }, 300);

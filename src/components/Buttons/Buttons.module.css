@@ -36,8 +36,6 @@
 }
 
 @media (max-width: 768px) {
-    /* Match .back/.profile's existing 38px so the header row reads as one consistent
-       size instead of the action buttons ballooning past their neighbors. */
     .action {
         width: 38px;
         height: 38px;

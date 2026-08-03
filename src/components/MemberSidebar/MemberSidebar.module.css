@@ -16,11 +16,20 @@
 
 .onlineBlock {
     composes: glass from '@/styles/mixins.module.css';
+    position: relative;
     padding: 12px;
     border-radius: var(--radius-lg);
     flex: 1 1 0%;
     overflow-y: auto;
     min-height: 0px;
+}
+
+.closeBtn {
+    display: none;
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    z-index: 5;
 }
 
 @media (max-width: 768px) {
@@ -44,13 +53,16 @@
         transform: translateX(0);
     }
 
-    /* Flush against the screen edge on mobile — matches the rooms drawer instead of
-       floating as an inset rounded card. Safe-area insets become content padding here
-       instead of a gap around the card. */
     .onlineBlock {
         border-radius: 0;
         padding: max(12px, env(safe-area-inset-top)) max(12px, env(safe-area-inset-right))
             max(12px, env(safe-area-inset-bottom)) 12px;
+    }
+
+    .closeBtn {
+        display: flex;
+        top: max(8px, env(safe-area-inset-top));
+        right: max(8px, env(safe-area-inset-right));
     }
 }
 

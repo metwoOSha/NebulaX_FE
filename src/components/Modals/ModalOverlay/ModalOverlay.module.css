@@ -17,10 +17,7 @@
     margin: auto;
 }
 
-@media (max-width: 768px) {
-    /* Every modal renders through this one component with no positioning of its own, so this
-       single breakpoint turns all of them into full-width bottom sheets. width/padding are set
-       as inline styles per call site, so !important is needed to win over them here. */
+@media (max-width: 1024px) {
     .overlay {
         align-items: flex-end;
         padding: 0;

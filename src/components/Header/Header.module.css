@@ -42,8 +42,6 @@
         gap: 6px;
     }
 
-    /* Inside a room the back button already conveys "you're in a sub-screen" — the
-       wordmark + icon badge just crowd out the 44px touch targets on the right. */
     .leftSideInRoom .logoTitle {
         display: none;
     }

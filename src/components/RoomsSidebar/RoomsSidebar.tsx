@@ -6,6 +6,7 @@ import clsx from 'clsx';
 
 import cls from './RoomsSidebar.module.css';
 import RoomListItem from '@/components/RoomListItem/RoomListItem';
+import Buttons from '@/components/Buttons/Buttons';
 import { useRooms } from '@/hooks/useRooms';
 import { useSidebarStore } from '@/store/sidebarStore';
 import { useSwipeToClose } from '@/hooks/useSwipeToClose';
@@ -22,6 +23,7 @@ export default function RoomsSidebar({ isCollapsed }: { isCollapsed?: boolean })
 
     return (
         <aside ref={asideRef} className={cls.sidebar}>
+            <Buttons type="close" onClick={() => setRoomsSidebarOpen(false)} className={cls.closeBtn} />
             {!isCollapsed && <div className={cls.label}>My rooms</div>}
             <div className={cls.list}>
                 {isLoading

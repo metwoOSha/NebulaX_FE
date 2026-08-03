@@ -24,12 +24,6 @@ export default function RoomLayout({ children, roomId }: { children: React.React
     const isMobile = useIsMobile();
     const hasAppliedMobileDefault = useRef(false);
 
-    // Both panels default to open for desktop; on a phone they should start as closed
-    // drawers instead. `isMobile` reads `false` on the very first client render (the
-    // SSR-safe snapshot, to avoid a hydration mismatch) and only flips to its real value
-    // on a follow-up render — so this can't be a mount-only (empty-deps) effect, it has to
-    // wait for that real value and then apply the correction exactly once, not on every
-    // later resize/rotation (which would rudely slam the drawers shut mid-session).
     useEffect(() => {
         if (isMobile && !hasAppliedMobileDefault.current) {
             hasAppliedMobileDefault.current = true;
@@ -78,14 +72,8 @@ export default function RoomLayout({ children, roomId }: { children: React.React
                     {children}
                 </Panel>
             </Group>
-            {/* Positioned absolutely (see MemberSidebar.module.css) so it overlays the content Panel
-                instead of sitting in the flex row — mounting/unmounting it never resizes Group's own
-                box, so it can't trigger the layout corruption the rooms Panel above works around.
-                Always mounted (not conditional) so its mobile slide-in/out transform can animate —
-                on desktop it's still just CSS display:none when closed, unchanged from before. */}
             <MemberSidebar roomId={roomId} isOpen={isMembersSidebarOpen} />
 
-            {/* Mobile-only backdrop: hidden above the breakpoint via CSS, so no viewport check needed here. */}
             {(isRoomsSidebarOpen || isMembersSidebarOpen) && (
                 <div className={cls.backdrop} onClick={closeMobilePanels} />
             )}

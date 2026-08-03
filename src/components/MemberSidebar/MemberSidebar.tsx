@@ -3,6 +3,7 @@
 import { useRef, useState } from 'react';
 import clsx from 'clsx';
 import cls from './MemberSidebar.module.css';
+import Buttons from '@/components/Buttons/Buttons';
 import MemberItem from '@/components/MemberItem/MemberItem';
 import MemberProfileModal from '@/components/Modals/MemberProfileModal/MemberProfileModal';
 import { useSocketStore } from '@/store/socketStore';
@@ -37,6 +38,7 @@ export default function MemberSidebar({ roomId, isOpen }: MemberSidebarProps) {
     return (
         <div ref={rootRef} className={clsx(cls.onlineSidebar, isOpen && cls.open)}>
             <div className={cls.onlineBlock}>
+                <Buttons type="close" onClick={() => setMembersSidebarOpen(false)} className={cls.closeBtn} />
                 <div className={cls.label}>
                     Online — <span>{onlineMembers.length}</span>
                 </div>
