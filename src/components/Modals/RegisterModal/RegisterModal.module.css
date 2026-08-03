@@ -42,6 +42,12 @@
     gap: 12px;
 }
 
+.error {
+    font-size: var(--text-sm);
+    color: var(--danger);
+    text-align: center;
+}
+
 .submit {
     composes: btn btnPrimary from '@/components/Buttons/Buttons.module.css';
     width: 100%;

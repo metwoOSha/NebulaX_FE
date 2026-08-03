@@ -1,5 +1,6 @@
 'use client';
 
+import { useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
@@ -22,7 +23,7 @@ export type RegisterFormValues = z.infer<typeof registerSchema>;
 
 interface RegisterModalProps {
     onSwitchToLogin: () => void;
-    onSubmit?: (values: RegisterFormValues) => void;
+    onSubmit?: (values: RegisterFormValues) => void | Promise<void>;
 }
 
 export default function RegisterModal({ onSwitchToLogin, onSubmit }: RegisterModalProps) {
@@ -35,8 +36,16 @@ export default function RegisterModal({ onSwitchToLogin, onSubmit }: RegisterMod
         resolver: zodResolver(registerSchema),
         defaultValues: { avatarColorId: 1 },
     });
+    const [formError, setFormError] = useState<string | null>(null);
 
-    const submit = handleSubmit((values) => onSubmit?.(values));
+    const submit = handleSubmit(async (values) => {
+        setFormError(null);
+        try {
+            await onSubmit?.(values);
+        } catch (err) {
+            setFormError(err instanceof Error ? err.message : 'Failed to create account');
+        }
+    });
 
     return (
         <ModalOverlay width={380} dimmed={false}>
@@ -89,6 +98,8 @@ export default function RegisterModal({ onSwitchToLogin, onSubmit }: RegisterMod
                     control={control}
                     render={({ field }) => <AvatarColorPicker value={field.value} onChange={field.onChange} />}
                 />
+
+                {formError && <span className={cls.error}>{formError}</span>}
 
                 <button type="submit" className={cls.submit} disabled={isSubmitting}>
                     Create account

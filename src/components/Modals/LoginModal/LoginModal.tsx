@@ -1,5 +1,6 @@
 'use client';
 
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
@@ -18,7 +19,7 @@ export type LoginFormValues = z.infer<typeof loginSchema>;
 
 interface LoginModalProps {
     onSwitchToRegister: () => void;
-    onSubmit?: (values: LoginFormValues) => void;
+    onSubmit?: (values: LoginFormValues) => void | Promise<void>;
 }
 
 export default function LoginModal({ onSwitchToRegister, onSubmit }: LoginModalProps) {
@@ -27,8 +28,16 @@ export default function LoginModal({ onSwitchToRegister, onSubmit }: LoginModalP
         handleSubmit,
         formState: { errors, isSubmitting },
     } = useForm<LoginFormValues>({ resolver: zodResolver(loginSchema) });
+    const [formError, setFormError] = useState<string | null>(null);
 
-    const submit = handleSubmit((values) => onSubmit?.(values));
+    const submit = handleSubmit(async (values) => {
+        setFormError(null);
+        try {
+            await onSubmit?.(values);
+        } catch (err) {
+            setFormError(err instanceof Error ? err.message : 'Failed to sign in');
+        }
+    });
 
     return (
         <ModalOverlay width={380} dimmed={false}>
@@ -57,6 +66,8 @@ export default function LoginModal({ onSwitchToRegister, onSubmit }: LoginModalP
                     error={errors.password?.message}
                     {...register('password')}
                 />
+                {formError && <span className={cls.error}>{formError}</span>}
+
                 <button type="submit" className={cls.submit} disabled={isSubmitting}>
                     Sign in
                 </button>
