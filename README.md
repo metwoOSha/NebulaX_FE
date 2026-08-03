@@ -13,6 +13,10 @@ Real-time chat with public rooms — Next.js frontend backed by a Socket.IO serv
 
 **[Live demo](https://nebulax-snowy.vercel.app/)** · **[Backend repo](https://github.com/metwoOSha/NebulaX_BE)**
 
+Don't want to register? Use the test account on the live demo:
+- email: `test.acc@test.com`
+- password: `12345678`
+
 ## Screenshots
 
 <p float="left">
