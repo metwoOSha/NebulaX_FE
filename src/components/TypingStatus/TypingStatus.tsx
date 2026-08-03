@@ -16,7 +16,7 @@ export default function TypingStatus({ usernames }: { usernames: string[] }) {
                 <span className={cls.dot} />
                 <span className={cls.dot} />
             </span>
-            <span>{formatTypingText(usernames)}</span>
+            <span className={cls.text}>{formatTypingText(usernames)}</span>
         </div>
     );
 }

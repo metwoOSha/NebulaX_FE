@@ -47,3 +47,53 @@
     border-radius: 3px;
     background: var(--glass-border-hi);
 }
+
+.backdrop {
+    display: none;
+}
+
+@media (max-width: 768px) {
+    /* Resizable-panels' drag handle makes no sense as a touch drawer — pointer-events:none
+       fully blocks it from ever receiving a pointerdown/touchstart, so no drag-resize logic
+       can be triggered by touch, not just visually hidden. */
+    .resizer {
+        pointer-events: none;
+    }
+
+    /* The members panel is a full-screen overlay on mobile, not a column that reserves space. */
+    .contentPadded {
+        padding-right: 0;
+    }
+
+    :global(#rooms-sidebar-panel) {
+        position: fixed !important;
+        inset: 0 auto 0 0 !important;
+        width: min(84vw, 320px) !important;
+        max-width: min(84vw, 320px) !important;
+        transform: translateX(-100%);
+        transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        z-index: 90;
+        touch-action: pan-y;
+    }
+
+    .wrapper:not(.roomsClosed) :global(#rooms-sidebar-panel) {
+        transform: translateX(0);
+    }
+
+    .roomsClosed :global(#rooms-sidebar-panel) {
+        /* Override the desktop "closed" collapse (flex:0/width:0) — on mobile "closed" means
+           off-screen via transform, not zero-width, so the drawer can still slide. */
+        width: min(84vw, 320px) !important;
+        min-width: 0 !important;
+    }
+
+    .backdrop {
+        display: block;
+        position: fixed;
+        inset: 0;
+        z-index: 85;
+        background: var(--overlay);
+        -webkit-backdrop-filter: blur(4px);
+        backdrop-filter: blur(4px);
+    }
+}

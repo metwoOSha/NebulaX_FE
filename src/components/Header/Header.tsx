@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
+import clsx from 'clsx';
 import IconBadge from '../IconBadge/IconBadge';
 import Buttons from '../Buttons/Buttons';
 import ProfileModal from '../Modals/ProfileModal/ProfileModal';
@@ -24,12 +25,12 @@ export default function Header() {
 
     return (
         <header className={cls.header}>
-            <div className={cls.leftSide}>
+            <div className={clsx(cls.leftSide, isRoom && cls.leftSideInRoom)}>
                 {isRoom && <Buttons type="back" onClick={() => router.push('/')} />}
                 <IconBadge tileId={0} size="label" />
                 <span className={cls.logoTitle}>NebulaX</span>
             </div>
-            <div className={cls.rightSide}>
+            <div className={clsx(cls.rightSide, isRoom && cls.rightSideInRoom)}>
                 {isRoom && (
                     <Buttons
                         type="action"

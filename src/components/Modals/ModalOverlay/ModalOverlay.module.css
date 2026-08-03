@@ -16,3 +16,23 @@
     position: relative;
     margin: auto;
 }
+
+@media (max-width: 768px) {
+    /* Every modal renders through this one component with no positioning of its own, so this
+       single breakpoint turns all of them into full-width bottom sheets. width/padding are set
+       as inline styles per call site, so !important is needed to win over them here. */
+    .overlay {
+        align-items: flex-end;
+        padding: 0;
+    }
+
+    .card {
+        width: 100% !important;
+        max-width: 100% !important;
+        margin: 0 !important;
+        border-radius: var(--radius-xl) var(--radius-xl) 0 0 !important;
+        padding-bottom: max(20px, env(safe-area-inset-bottom)) !important;
+        max-height: 90vh;
+        overflow-y: auto;
+    }
+}

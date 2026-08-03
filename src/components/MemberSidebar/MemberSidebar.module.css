@@ -10,6 +10,10 @@
     gap: var(--island-gap);
 }
 
+.onlineSidebar:not(.open) {
+    display: none;
+}
+
 .onlineBlock {
     composes: glass from '@/styles/mixins.module.css';
     padding: 12px;
@@ -17,6 +21,37 @@
     flex: 1 1 0%;
     overflow-y: auto;
     min-height: 0px;
+}
+
+@media (max-width: 768px) {
+    .onlineSidebar {
+        position: fixed;
+        inset: 0 0 0 auto;
+        width: min(84vw, 320px);
+        z-index: 95;
+        gap: 0;
+        transform: translateX(100%);
+        transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        touch-action: pan-y;
+    }
+
+    .onlineSidebar:not(.open) {
+        display: flex;
+        transform: translateX(100%);
+    }
+
+    .onlineSidebar.open {
+        transform: translateX(0);
+    }
+
+    /* Flush against the screen edge on mobile — matches the rooms drawer instead of
+       floating as an inset rounded card. Safe-area insets become content padding here
+       instead of a gap around the card. */
+    .onlineBlock {
+        border-radius: 0;
+        padding: max(12px, env(safe-area-inset-top)) max(12px, env(safe-area-inset-right))
+            max(12px, env(safe-area-inset-bottom)) 12px;
+    }
 }
 
 .label {

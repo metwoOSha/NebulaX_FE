@@ -1,11 +1,12 @@
 .toast {
     position: fixed;
-    top: 102px;
-    right: 20px;
+    top: calc(102px + env(safe-area-inset-top));
+    right: max(20px, env(safe-area-inset-right));
     z-index: 220;
     display: flex;
     align-items: center;
     gap: 8px;
+    max-width: calc(100vw - 40px - env(safe-area-inset-left) - env(safe-area-inset-right));
     padding: 11px 16px;
     border-radius: var(--radius-full);
     background: var(--online);

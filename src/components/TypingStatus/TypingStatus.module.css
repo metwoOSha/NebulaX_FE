@@ -4,11 +4,20 @@
     gap: 6px;
     font-size: var(--text-xs);
     color: var(--accent);
+    min-width: 0;
 }
 
 .dots {
     display: flex;
     gap: 3px;
+    flex-shrink: 0;
+}
+
+.text {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    min-width: 0;
 }
 
 .dot {

@@ -19,11 +19,29 @@
     z-index: 1;
 }
 
-.roomCard:hover {
-    border-color: transparent;
-    transform: var(--room-card-hover-lift);
-    background: var(--room-card-hover-bg);
-    box-shadow: var(--room-card-hover-shadow);
+.menuButton {
+    display: none;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 3;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-full);
+    background: var(--glass-bg);
+    color: var(--text-secondary);
+    font-size: 17px;
+    line-height: 1;
+    cursor: pointer;
+}
+
+@media (max-width: 768px) {
+    .menuButton {
+        display: flex;
+    }
 }
 
 .roomCard::before {
@@ -36,10 +54,6 @@
     transition: opacity 0.3s ease;
     pointer-events: none;
     z-index: 0;
-}
-
-.roomCard:hover::before {
-    opacity: var(--room-card-sweep-opacity);
 }
 
 .roomCard::after {
@@ -56,10 +70,6 @@
     z-index: 0;
 }
 
-.roomCard:hover::after {
-    opacity: 1;
-}
-
 .roomIcon {
     display: flex;
     align-items: flex-start;
@@ -72,12 +82,6 @@
         max-height 0.24s cubic-bezier(0.4, 0, 0.2, 1),
         opacity 0.16s ease,
         margin-bottom 0.24s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.roomCard:hover .roomIcon {
-    max-height: 0;
-    opacity: 0;
-    margin-bottom: 0;
 }
 
 .roomBadge {
@@ -137,11 +141,6 @@
     z-index: 2;
 }
 
-.roomCard:hover .roomCardReveal {
-    transform: translateY(0);
-    opacity: 1;
-}
-
 .arrow {
     font-size: 10px;
 }
@@ -150,6 +149,37 @@
     transition: transform 0.2s ease;
 }
 
-.roomCard:hover .roomCardReveal .arrow {
-    transform: translateX(4px);
+/* Hover-only effects — gated so tapping on a touch device (which browsers simulate as a
+   hover state) never triggers this reveal animation right before navigating away. Only
+   devices with a real mouse (fine pointer + true hover support) get it. */
+@media (hover: hover) and (pointer: fine) {
+    .roomCard:hover {
+        border-color: transparent;
+        transform: var(--room-card-hover-lift);
+        background: var(--room-card-hover-bg);
+        box-shadow: var(--room-card-hover-shadow);
+    }
+
+    .roomCard:hover::before {
+        opacity: var(--room-card-sweep-opacity);
+    }
+
+    .roomCard:hover::after {
+        opacity: 1;
+    }
+
+    .roomCard:hover .roomIcon {
+        max-height: 0;
+        opacity: 0;
+        margin-bottom: 0;
+    }
+
+    .roomCard:hover .roomCardReveal {
+        transform: translateY(0);
+        opacity: 1;
+    }
+
+    .roomCard:hover .roomCardReveal .arrow {
+        transform: translateX(4px);
+    }
 }

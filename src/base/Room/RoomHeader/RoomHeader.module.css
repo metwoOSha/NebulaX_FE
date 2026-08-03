@@ -7,6 +7,11 @@
     flex-shrink: 0;
 }
 
+.roomInfo {
+    min-width: 0;
+    overflow: hidden;
+}
+
 .roomName {
     font-size: var(--text-base);
     font-weight: 600;

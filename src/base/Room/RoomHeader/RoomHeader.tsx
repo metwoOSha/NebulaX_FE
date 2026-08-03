@@ -16,7 +16,7 @@ export default function RoomHeader({ room, online = 0, typingUsernames = [] }: R
     return (
         <div className={cls.RoomHeader}>
             <IconBadge tileId={room?.theme_id ?? 1} size="label" />
-            <div>
+            <div className={cls.roomInfo}>
                 <div className={cls.roomName}>
                     <span>{room?.name ?? ''}</span>
                 </div>

@@ -203,6 +203,9 @@
 
 * {
     box-sizing: border-box;
+    /* Kill the default grey/blue flash mobile browsers draw on tap — we handle tap
+       feedback ourselves (or intentionally have none), this native overlay isn't it. */
+    -webkit-tap-highlight-color: transparent;
 }
 html,
 body {

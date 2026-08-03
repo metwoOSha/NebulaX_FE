@@ -26,3 +26,13 @@
     height: 40px;
     border-radius: var(--radius-sm);
 }
+
+@media (max-width: 768px) {
+    .sidebar {
+        touch-action: pan-y;
+        padding-top: max(12px, env(safe-area-inset-top));
+        padding-bottom: max(12px, env(safe-area-inset-bottom));
+        padding-left: max(12px, env(safe-area-inset-left));
+        border-radius: 0;
+    }
+}

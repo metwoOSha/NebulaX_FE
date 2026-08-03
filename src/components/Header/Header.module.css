@@ -5,7 +5,8 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 12px 18px;
+    padding: max(12px, env(safe-area-inset-top)) max(18px, env(safe-area-inset-right)) 12px
+        max(18px, env(safe-area-inset-left));
     border-radius: var(--radius-lg);
     flex-shrink: 0;
 }
@@ -27,4 +28,23 @@
     font-size: var(--text-lg);
     font-weight: 700;
     letter-spacing: -0.02em;
+    white-space: nowrap;
+}
+
+@media (max-width: 768px) {
+    .header {
+        padding-left: max(12px, env(safe-area-inset-left));
+        padding-right: max(12px, env(safe-area-inset-right));
+    }
+
+    .leftSide,
+    .rightSide {
+        gap: 6px;
+    }
+
+    /* Inside a room the back button already conveys "you're in a sub-screen" — the
+       wordmark + icon badge just crowd out the 44px touch targets on the right. */
+    .leftSideInRoom .logoTitle {
+        display: none;
+    }
 }

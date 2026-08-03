@@ -1,24 +1,32 @@
 'use client';
 
-import { useState } from 'react';
+import { useRef, useState } from 'react';
+import clsx from 'clsx';
 import cls from './MemberSidebar.module.css';
 import MemberItem from '@/components/MemberItem/MemberItem';
 import MemberProfileModal from '@/components/Modals/MemberProfileModal/MemberProfileModal';
 import { useSocketStore } from '@/store/socketStore';
 import { useAuthStore } from '@/store/authStore';
+import { useSidebarStore } from '@/store/sidebarStore';
 import { useRoomMembers } from '@/hooks/useRoomMembers';
+import { useSwipeToClose } from '@/hooks/useSwipeToClose';
 import { getAvatarColorById } from '@/config/avatars.config';
 import type { RoomMember } from '@/types/room.types';
 
 interface MemberSidebarProps {
     roomId: string;
+    isOpen: boolean;
 }
 
-export default function MemberSidebar({ roomId }: MemberSidebarProps) {
+export default function MemberSidebar({ roomId, isOpen }: MemberSidebarProps) {
     const { onlineUserIds } = useSocketStore();
     const { user } = useAuthStore();
+    const { setMembersSidebarOpen } = useSidebarStore();
     const { data } = useRoomMembers(roomId);
     const [selectedMember, setSelectedMember] = useState<RoomMember | null>(null);
+    const rootRef = useRef<HTMLDivElement>(null);
+
+    useSwipeToClose(rootRef, 'right', () => setMembersSidebarOpen(false));
 
     const members = data?.members ?? [];
     const onlineIds = user && !onlineUserIds.includes(user.id) ? [...onlineUserIds, user.id] : onlineUserIds;
@@ -27,7 +35,7 @@ export default function MemberSidebar({ roomId }: MemberSidebarProps) {
     const offlineMembers = members.filter((member) => !onlineIds.includes(member.id)).sort(byYouFirst);
 
     return (
-        <div className={cls.onlineSidebar}>
+        <div ref={rootRef} className={clsx(cls.onlineSidebar, isOpen && cls.open)}>
             <div className={cls.onlineBlock}>
                 <div className={cls.label}>
                     Online — <span>{onlineMembers.length}</span>
