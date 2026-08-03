@@ -13,7 +13,22 @@ Real-time chat with public rooms — Next.js frontend backed by a Socket.IO serv
 
 **[Live demo](https://nebulax-snowy.vercel.app/)** · **[Backend repo](https://github.com/metwoOSha/NebulaX_BE)**
 
-![NebulaX screenshot](#)
+## Screenshots
+
+<p float="left">
+  <img src="docs/screenshots/rooms-list-dark.png" width="45%" />
+  <img src="docs/screenshots/rooms-list-light.png" width="45%" />
+</p>
+
+<p float="left">
+  <img src="docs/screenshots/chat-room.png" width="45%" />
+  <img src="docs/screenshots/create-room.png" width="45%" />
+</p>
+
+<p float="left">
+  <img src="docs/screenshots/edit-profile.png" width="45%" />
+  <img src="docs/screenshots/member-profile.png" width="45%" />
+</p>
 
 ## Highlights
 
